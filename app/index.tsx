@@ -46,7 +46,6 @@ export default function App() {
     if (todoText.trim() === "") return; // Prevent adding empty todos
 
     if (editingTodoId) {
-      // Update existing todo
       const updatedTodos = todos.map((todo) =>
         todo.id === editingTodoId ? { ...todo, title: todoText } : todo
       );
@@ -55,7 +54,6 @@ export default function App() {
       setSuccessMessage("Todo edited successfully!");
       setEditingTodoId(null);
     } else {
-      // Add new todo
       const newTodo: ToDoType = {
         id: Math.random(),
         title: todoText,
@@ -70,7 +68,6 @@ export default function App() {
     setTodoText("");
     Keyboard.dismiss();
     
-    // Clear message after a few seconds
     setTimeout(() => setSuccessMessage(""), 3000);
   };
 
@@ -79,8 +76,6 @@ export default function App() {
     setTodos(updatedTodos);
     await AsyncStorage.setItem("my-todo", JSON.stringify(updatedTodos));
     setSuccessMessage("Todo deleted successfully!");
-
-    // Clear message after a few seconds
     setTimeout(() => setSuccessMessage(""), 3000);
   };
 
@@ -105,6 +100,10 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>My Todo List</Text>
+      </View>
+      
       <View style={styles.searchBar}>
         <TextInput
           placeholder="Search"
@@ -139,7 +138,7 @@ export default function App() {
         keyboardVerticalOffset={10}
       >
         <TextInput
-          placeholder="Add or Edit Todo"
+          placeholder="Add Todo"
           value={todoText}
           onChangeText={setTodoText}
           style={styles.newTodoInput}
@@ -197,13 +196,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#f5f5f5",
   },
+  header: {
+    marginTop: 20,
+    marginBottom: 10,
+    alignItems: "center",
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+  },
   searchBar: {
     flexDirection: "row",
     backgroundColor: "#fff",
     alignItems: "center",
-    padding: 16,
+    padding: 12,
     borderRadius: 10,
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
   searchInput: {
     flex: 1,
@@ -217,8 +231,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 16,
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 15,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   todoInfoContainer: {
     flexDirection: "row",
@@ -245,6 +264,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginVertical: 10,
+    alignItems: "center",
   },
   successText: {
     color: "#3c763d",
@@ -263,14 +283,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     color: "#333",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   addButton: {
     backgroundColor: "#4630EB",
-    padding: 8,
+    padding: 12,
     borderRadius: 10,
     marginLeft: 20,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
   addButtonText: {
     color: "#fff",
